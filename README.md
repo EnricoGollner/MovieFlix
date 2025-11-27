@@ -1,2 +1,2 @@
 # MovieFlix
-Projeto Java + Spring
+Projeto Java + Spring - Catálogo de filmes
