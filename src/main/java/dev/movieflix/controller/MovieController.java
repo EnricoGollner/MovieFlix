@@ -27,11 +27,25 @@ public class MovieController {
         return ResponseEntity.ok(moviesResponse);
     }
 
+    @GetMapping("/top5")
+    public ResponseEntity<List<MovieResponse>> findTop5() {
+        List<MovieResponse> response = service.findTop5()
+                .stream().map(MovieMapper::toMovieResponse).toList();
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<MovieResponse> findById(@PathVariable Long id) {
         return service.findById(id)
                 .map(movie -> ResponseEntity.ok(MovieMapper.toMovieResponse(movie)))
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<MovieResponse>> findByCategory(@RequestParam Long category) {
+        List<MovieResponse> response = service.findByCategory(category)
+                .stream().map(MovieMapper::toMovieResponse).toList();
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping

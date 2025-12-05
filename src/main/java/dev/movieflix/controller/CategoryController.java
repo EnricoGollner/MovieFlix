@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController()
+@RestController
 @RequestMapping("/movieflix/category")
 @RequiredArgsConstructor
 public class CategoryController {
@@ -32,7 +32,6 @@ public class CategoryController {
         List<CategoryResponse> categories = service.findAll().stream()
                 .map(CategoryMapper::toCategoryResponse)
                 .toList();
-
         return ResponseEntity.ok(categories);
     }
 

@@ -17,6 +17,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -34,17 +36,18 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest userLoginRequest) {
         try {
-            UsernamePasswordAuthenticationToken userAndPass = new UsernamePasswordAuthenticationToken(request.email(), request.password());
-            Authentication authenticate = authenticationManager.authenticate(userAndPass);
+            UsernamePasswordAuthenticationToken userAndPass = new UsernamePasswordAuthenticationToken(userLoginRequest.email(), userLoginRequest.password());
+            Authentication authentication = authenticationManager.authenticate(userAndPass);
 
-            User user = (User) authenticate.getPrincipal();
+            User user = (User) authentication.getPrincipal();
+
             String token = tokenService.generateToken(user);
-
             return ResponseEntity.ok(new LoginResponse(token));
-        } catch (BadCredentialsException e) {
-            throw new UsernameOrPasswordInvalidException("Usuário ou senha inválidos.");
+
+        } catch (BadCredentialsException exception){
+            throw new UsernameOrPasswordInvalidException("Usuário ou Senha invalidos");
         }
     }
 

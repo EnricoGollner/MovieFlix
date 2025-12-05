@@ -16,5 +16,4 @@ public record MovieRequest(
         List<Long> categories,
         List<Long> streamings
 ) {
-
 }
