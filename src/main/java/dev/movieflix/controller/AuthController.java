@@ -38,16 +38,15 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest userLoginRequest) {
         try {
-            UsernamePasswordAuthenticationToken userAndPass = new UsernamePasswordAuthenticationToken(userLoginRequest.email(), userLoginRequest.password());
+            UsernamePasswordAuthenticationToken userAndPass = new UsernamePasswordAuthenticationToken(
+                    userLoginRequest.email(), userLoginRequest.password());
             Authentication authentication = authenticationManager.authenticate(userAndPass);
 
             User user = (User) authentication.getPrincipal();
-
             String token = tokenService.generateToken(user);
             return ResponseEntity.ok(new LoginResponse(token));
-
         } catch (BadCredentialsException exception){
-            throw new UsernameOrPasswordInvalidException("Usuário ou Senha invalidos");
+            throw new UsernameOrPasswordInvalidException("Usuário ou senha inválidos");
         }
     }
 
@@ -59,7 +58,6 @@ public class AuthController {
         newUser.setEmail(request.email());
 
         userRepository.save(newUser);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(new RegisterUserResponse(newUser.getName(), newUser.getEmail()));
     }
 }

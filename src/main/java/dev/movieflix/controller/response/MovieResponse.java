@@ -1,6 +1,7 @@
 package dev.movieflix.controller.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 
 import java.time.LocalDate;
@@ -8,6 +9,7 @@ import java.util.List;
 
 @Builder
 public record MovieResponse(
+        @Schema(type = "Long", description = "Código do filme")
         Long id,
         String name,
         String description,

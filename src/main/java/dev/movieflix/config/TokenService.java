@@ -18,28 +18,28 @@ public class TokenService {
 
     public String generateToken(User user) {
         Algorithm algorithm = Algorithm.HMAC256(secret);
-
         return JWT.create()
-                .withClaim("userId", user.getId())
                 .withSubject(user.getEmail())
-                .withExpiresAt(Instant.now().plusSeconds(86400))
+                .withClaim("userId", user.getId())
+                .withClaim("name", user.getName())
                 .withIssuedAt(Instant.now())
+                .withExpiresAt(Instant.now().plusSeconds(86400))
+                .withIssuer("MovieFlix API")
                 .sign(algorithm);
     }
 
     public Optional<JWTUserData> validateToken(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
-
-            DecodedJWT decode = JWT.require(algorithm)
+            DecodedJWT jwt = JWT.require(algorithm)
                     .build()
                     .verify(token);
 
             return Optional.of(JWTUserData.builder()
-                    .email(decode.getSubject())
-                    .userId(decode.getClaim("userId").asLong())
+                    .userId(jwt.getClaim("userId").asLong())
+                    .name(jwt.getClaim("name").asString())
+                    .email(jwt.getSubject())
                     .build());
-
         } catch (JWTVerificationException ex) {
             return Optional.empty();
         }

@@ -1,10 +1,12 @@
 package dev.movieflix.service;
 
+import dev.movieflix.config.JWTUserData;
 import dev.movieflix.entity.Category;
 import dev.movieflix.entity.Movie;
 import dev.movieflix.entity.Streaming;
 import dev.movieflix.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -40,8 +42,8 @@ public class MovieService {
         return movieRepository.save(newMovie);
     }
 
-    public Optional<Movie> update(Movie updateMovie) {
-        Optional<Movie> optMovie = findById(updateMovie.getId());
+    public Optional<Movie> update(Long id, Movie updateMovie) {
+        Optional<Movie> optMovie = findById(id);
         if (optMovie.isPresent()) {
             Movie movie = optMovie.get();
             movie.setName(updateMovie.getName());

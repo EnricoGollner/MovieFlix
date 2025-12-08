@@ -25,14 +25,12 @@ public class SecurityFilter extends OncePerRequestFilter {
         if (Strings.isNotEmpty(authorizationHeader) && authorizationHeader.startsWith("Bearer ")) {
             String token = authorizationHeader.substring("Bearer ".length());
             Optional<JWTUserData> optUser = tokenService.validateToken(token);
-
             if (optUser.isPresent()) {
                 JWTUserData userData = optUser.get();
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userData, null, null);
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
-            filterChain.doFilter(request, response);
-        } else {
-            filterChain.doFilter(request, response);
         }
-    }}
+        filterChain.doFilter(request, response);
+    }
+}

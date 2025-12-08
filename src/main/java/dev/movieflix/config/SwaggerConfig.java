@@ -12,6 +12,7 @@ public class SwaggerConfig {
     public OpenAPI getOpenAPI() {
         Contact contact = new Contact();
         contact.setName("Enrico Gollner");
+        contact.setEmail("enrico@dev.com");
         contact.setUrl("https://github.com/EnricoGollner");
 
         Info info = new Info();
