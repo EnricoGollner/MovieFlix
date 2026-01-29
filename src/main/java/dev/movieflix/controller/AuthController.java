@@ -1,10 +1,10 @@
 package dev.movieflix.controller;
 
 import dev.movieflix.config.TokenService;
-import dev.movieflix.controller.request.LoginRequest;
-import dev.movieflix.controller.request.RegisterUserRequest;
-import dev.movieflix.controller.response.LoginResponse;
-import dev.movieflix.controller.response.RegisterUserResponse;
+import dev.movieflix.controller.dtos.request.LoginRequest;
+import dev.movieflix.controller.dtos.request.RegisterUserRequest;
+import dev.movieflix.controller.dtos.response.LoginResponse;
+import dev.movieflix.controller.dtos.response.RegisterUserResponse;
 import dev.movieflix.entity.User;
 import dev.movieflix.exception.UsernameOrPasswordInvalidException;
 import dev.movieflix.repository.UserRepository;

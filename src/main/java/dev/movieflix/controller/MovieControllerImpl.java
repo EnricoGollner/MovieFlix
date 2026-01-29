@@ -1,17 +1,11 @@
 package dev.movieflix.controller;
 
-import dev.movieflix.controller.request.MovieRequest;
-import dev.movieflix.controller.response.MovieResponse;
+import dev.movieflix.controller.interfaces.MovieController;
+import dev.movieflix.controller.dtos.request.MovieRequest;
+import dev.movieflix.controller.dtos.response.MovieResponse;
 import dev.movieflix.entity.Movie;
 import dev.movieflix.mapper.MovieMapper;
 import dev.movieflix.service.MovieService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,14 +18,15 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/movieflix/movies")
 @RequiredArgsConstructor
-@Tag(name = "Movie", description = "Recurso responsável pelo gerenciamento dos filmes.")
-public class MovieController {
+public class MovieControllerImpl implements MovieController {
     private final MovieService service;
 
-    @Operation(summary = "Buscar lista de filmes", description = "Método responsável por retornar a lista com todos os filmes cadastrados.",
-    security = @SecurityRequirement(name = "bearerAuth"))
-    @ApiResponse(responseCode = "200", description = "Retorna todos os filmes cadastrados",
-            content = @Content(array = @ArraySchema(schema = @Schema(implementation = MovieResponse.class))))
+    @PostMapping
+    public ResponseEntity<MovieResponse> save(@Valid @RequestBody MovieRequest request) {
+        Movie savedMovie = service.save(MovieMapper.toMovie(request));
+        return ResponseEntity.status(HttpStatus.CREATED).body(MovieMapper.toMovieResponse(savedMovie));
+    }
+
     @GetMapping
     public ResponseEntity<List<MovieResponse>> findAll() {
         List<MovieResponse> moviesResponse = service.findAll().stream()
@@ -59,14 +54,6 @@ public class MovieController {
         List<MovieResponse> response = service.findByCategory(category)
                 .stream().map(MovieMapper::toMovieResponse).toList();
         return ResponseEntity.ok(response);
-    }
-
-    @Operation(summary = "Salvar filme", description = "Método responsável por cadastrar um novo filme.")
-    @ApiResponse(responseCode = "201", description = "Filme cadastrado com sucesso.")
-    @PostMapping
-    public ResponseEntity<MovieResponse> save(@Valid @RequestBody MovieRequest request) {
-        Movie savedMovie = service.save(MovieMapper.toMovie(request));
-        return ResponseEntity.status(HttpStatus.CREATED).body(MovieMapper.toMovieResponse(savedMovie));
     }
 
     @PutMapping("/{id}")

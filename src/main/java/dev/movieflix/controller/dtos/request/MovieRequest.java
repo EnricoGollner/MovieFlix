@@ -1,8 +1,9 @@
-package dev.movieflix.controller.request;
+package dev.movieflix.controller.dtos.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 
 import java.time.LocalDate;
@@ -10,8 +11,8 @@ import java.util.List;
 
 @Builder
 public record MovieRequest(
-        @Schema(type = "string", description = "Nome do filme")
-        @NotBlank(message = "O título do filme é obrigatório.")
+        @Schema(type = "string", description = "Título do filme")
+        @NotEmpty(message = "O título do filme é obrigatório.")
         String name,
         @Schema(type = "string", description = "Descrição do filme")
         String description,

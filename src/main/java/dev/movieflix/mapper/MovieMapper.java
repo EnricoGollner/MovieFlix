@@ -1,9 +1,9 @@
 package dev.movieflix.mapper;
 
-import dev.movieflix.controller.request.MovieRequest;
-import dev.movieflix.controller.response.CategoryResponse;
-import dev.movieflix.controller.response.MovieResponse;
-import dev.movieflix.controller.response.StreamingResponse;
+import dev.movieflix.controller.dtos.request.MovieRequest;
+import dev.movieflix.controller.dtos.response.CategoryResponse;
+import dev.movieflix.controller.dtos.response.MovieResponse;
+import dev.movieflix.controller.dtos.response.StreamingResponse;
 import dev.movieflix.entity.Category;
 import dev.movieflix.entity.Movie;
 import dev.movieflix.entity.Streaming;

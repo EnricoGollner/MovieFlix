@@ -1,4 +1,4 @@
-package dev.movieflix.controller.request;
+package dev.movieflix.controller.dtos.request;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;

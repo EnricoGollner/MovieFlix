@@ -1,7 +1,7 @@
 package dev.movieflix.mapper;
 
-import dev.movieflix.controller.request.CategoryRequest;
-import dev.movieflix.controller.response.CategoryResponse;
+import dev.movieflix.controller.dtos.request.CategoryRequest;
+import dev.movieflix.controller.dtos.response.CategoryResponse;
 import dev.movieflix.entity.Category;
 import lombok.experimental.UtilityClass;
 

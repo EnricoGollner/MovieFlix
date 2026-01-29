@@ -1,9 +1,8 @@
 package dev.movieflix.mapper;
 
-import dev.movieflix.controller.request.StreamingRequest;
-import dev.movieflix.controller.response.StreamingResponse;
+import dev.movieflix.controller.dtos.request.StreamingRequest;
+import dev.movieflix.controller.dtos.response.StreamingResponse;
 import dev.movieflix.entity.Streaming;
-import dev.movieflix.service.StreamingService;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

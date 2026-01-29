@@ -1,7 +1,8 @@
 package dev.movieflix.controller;
 
-import dev.movieflix.controller.request.CategoryRequest;
-import dev.movieflix.controller.response.CategoryResponse;
+import dev.movieflix.controller.dtos.request.CategoryRequest;
+import dev.movieflix.controller.dtos.response.CategoryResponse;
+import dev.movieflix.controller.interfaces.CategoryController;
 import dev.movieflix.entity.Category;
 import dev.movieflix.mapper.CategoryMapper;
 import dev.movieflix.service.CategoryService;
@@ -17,7 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/movieflix/category")
 @RequiredArgsConstructor
-public class CategoryController {
+public class CategoryControllerImpl implements CategoryController {
     private final CategoryService service;
 
     @PostMapping
