@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { Header } from '../../../components/unauthenticated/header/header';
-import { SignUp } from '../../../components/unauthenticated/sign-up/sign-up';
+import { AuthLayout } from '../layout/auth-layout/auth-layout';
+import { SignUpForm } from '../../../components/unauthenticated/sign-up-form/sign-up-form';
 
 @Component({
   selector: 'app-register',
-  imports: [Header, SignUp],
+  imports: [AuthLayout, SignUpForm ],
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
