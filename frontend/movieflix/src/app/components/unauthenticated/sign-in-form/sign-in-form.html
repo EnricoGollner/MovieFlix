@@ -3,24 +3,48 @@
         <div class="login-box p-4">
             <h1 class="mb-4 text-center">Entre na sua conta</h1>
 
-            <form #loginForm="ngForm">
+            <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
                 <div class="mb-3">
-                    <input type="email" class="form-control custom-input" placeholder="E-mail ou número de telefone"
-                        id="email" name="email">
-                </div>
+                    <input type="text" class="form-control custom-input" placeholder="E-mail ou número de telefone" type="email" id="email"
+                        name="email" [(ngModel)]="user.email" required email #email="ngModel">
 
+                    @if (email.invalid && (email.dirty || email.touched)) {
+                        <div class="error-message">
+                            @if (email.errors?.['required']) {
+                                <div>Email é obrigatório.</div>
+                            }
+                            @if(email.errors?.['email']) {
+                                <div>Email inválido.</div>
+                            }
+                        </div>
+                    }
+                </div>
+                
                 <div class="mb-3">
-                    <input class="form-control custom-input" placeholder="Sua senha" type="password" id="password"
-                        name="password">
+                    <input class="form-control custom-input" placeholder="Sua senha" type="password" id="password" name="password"
+                        [(ngModel)]="user.password" required minlength="6" #password="ngModel">
 
+                        @if (password.invalid && (password.dirty || password.touched)) {
+                            <div class="error-message">
+                                @if (password.errors?.['required']) {
+                                    <div>Senha é obrigatória.</div>
+                                }
+                            </div>
+                        }
                 </div>
-
+                
+                @if (errorMessage) {
+                    <div class="error-message">
+                        {{errorMessage}}
+                    </div>
+                }
+                
                 <button type="submit" [disabled]="loginForm.invalid" class="btn btn-danger w-100 custom-button mb-3">
                     Entrar na conta
                 </button>
-
+                
                 <div class="text-center mb-4">
-                    <a [routerLink]="'/forgot-password'" class="text-white text-decoration-none forgot-password">
+                    <a [routerLink]="'/cadastre-se'" class="text-white text-decoration-none forgot-password">
                         Esqueci minha senha
                     </a>
                 </div>

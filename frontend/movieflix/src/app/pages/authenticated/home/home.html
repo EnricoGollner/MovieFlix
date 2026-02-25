@@ -1,7 +1,37 @@
 <app-header />
-
-<div>
-    <app-movie-card />
-    <app-movie-card />
-    <app-movie-card />
+<div id="home" class="container">
+    <a [routerLink]="'/new-movie'" class="btn btn-danger">
+        Cadastrar filme
+    </a>
+    <hr>
 </div>
+
+@if (loading) {
+    <div class="text-center text-white">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Carregando...</span>
+        </div>
+        <p class="mt-2">Carregando filmes...</p>
+    </div>
+}
+
+@if (error) {
+    <div class="alert alert-danger" role="alert">
+        {{error}}
+    </div>
+}
+
+@if (!loading && !error) {
+    <div class="container mb-5">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @for (movie of movies; track movie.id) {
+                <div class="col">
+                    <app-movie-card [title]="movie.title" [description]="movie.description" [duration]="duration()"
+                        [releaseDate]="movie.releaseDate" [ageRating]="ageRating()" [isTop10]="isTop10()"
+                        [approvalRating]="getApprovalRating(movie.rating)"
+                        [providerLogo]="providerLogo(movie.services)"></app-movie-card>
+                </div>
+            }
+        </div>
+    </div>
+}
